@@ -8,6 +8,7 @@ use App\Http\Controllers\DonorController;
 use App\Http\Controllers\RecipientController;
 use App\Http\Controllers\IncomingDonationController;
 use App\Http\Controllers\OutgoingDistributionController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -21,3 +22,5 @@ Route::resource('bantuan-masuk', IncomingDonationController::class)
 
 Route::resource('distribusi', OutgoingDistributionController::class)
     ->names('outgoing-distributions');
+
+Route::get('/laporan', [ReportController::class, 'index'])->name('reports.index');
