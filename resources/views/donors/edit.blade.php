@@ -1,152 +1,56 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Donatur - POSKO</title>
+@extends('layouts.app')
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+@section('title', 'Edit Donatur - POSKO')
+@section('page-subtitle', 'Edit Donatur')
 
-        body {
-            margin: 0;
-            background: #f4f6f8;
-            color: #1f2937;
-        }
+@section('content')
 
-        .navbar {
-            background: #1e40af;
-            color: white;
-            padding: 18px 40px;
-        }
+    <div class="section form-wrapper">
+        <h2>Edit Donatur</h2>
 
-        .navbar h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+        <form action="{{ route('donors.update', $donor->id) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        .container {
-            padding: 30px 40px;
-        }
+            <div class="form-group">
+                <label>Nama Donatur</label>
+                <input type="text" name="name" value="{{ old('name', $donor->name) }}">
 
-        .section {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-            max-width: 760px;
-        }
+                @error('name')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+            <div class="form-group">
+                <label>No. HP</label>
+                <input type="text" name="phone" value="{{ old('phone', $donor->phone) }}">
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+                @error('phone')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-        }
+            <div class="form-group">
+                <label>Instansi / Komunitas</label>
+                <input type="text" name="institution" value="{{ old('institution', $donor->institution) }}">
 
-        textarea {
-            height: 120px;
-            resize: vertical;
-        }
+                @error('institution')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
 
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
+            <div class="form-group">
+                <label>Alamat</label>
+                <textarea name="address">{{ old('address', $donor->address) }}</textarea>
 
-        .btn-primary {
-            background: #1e40af;
-            color: white;
-        }
+                @error('address')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
 
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-
-        .error {
-            color: #dc2626;
-            font-size: 13px;
-            margin-top: 6px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="navbar">
-        <h1>POSKO</h1>
-        <span>Edit Donatur</span>
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a href="{{ route('donors.index') }}" class="btn btn-secondary">Kembali</a>
+        </form>
     </div>
 
-    <div class="container">
-        <div class="section">
-            <h2>Edit Donatur</h2>
-
-            <form action="{{ route('donors.update', $donor->id) }}" method="POST">
-                @csrf
-                @method('PUT')
-
-                <div class="form-group">
-                    <label>Nama Donatur</label>
-                    <input type="text" name="name" value="{{ old('name', $donor->name) }}">
-
-                    @error('name')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>No. HP</label>
-                    <input type="text" name="phone" value="{{ old('phone', $donor->phone) }}">
-
-                    @error('phone')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Instansi / Komunitas</label>
-                    <input type="text" name="institution" value="{{ old('institution', $donor->institution) }}">
-
-                    @error('institution')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Alamat</label>
-                    <textarea name="address">{{ old('address', $donor->address) }}</textarea>
-
-                    @error('address')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('donors.index') }}" class="btn btn-secondary">Kembali</a>
-            </form>
-        </div>
-    </div>
-
-</body>
-</html>
+@endsection

@@ -1,144 +1,53 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Bantuan Masuk - POSKO</title>
+@extends('layouts.app')
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+@section('title', 'Detail Bantuan Masuk - POSKO')
+@section('page-subtitle', 'Detail Bantuan Masuk')
 
-        body {
-            margin: 0;
-            background: #f4f6f8;
-            color: #1f2937;
-        }
+@section('content')
 
-        .navbar {
-            background: #1e40af;
-            color: white;
-            padding: 18px 40px;
-        }
+    <div class="section form-wrapper">
+        <h2>Detail Bantuan Masuk</h2>
 
-        .navbar h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+        <p><strong>Tanggal:</strong> {{ \Carbon\Carbon::parse($incomingDonation->donation_date)->format('d-m-Y') }}</p>
+        <p><strong>Donatur:</strong> {{ $incomingDonation->donor->name ?? '-' }}</p>
+        <p><strong>Catatan:</strong> {{ $incomingDonation->notes ?? '-' }}</p>
 
-        .container {
-            padding: 30px 40px;
-        }
+        <h3>Barang Bantuan</h3>
 
-        .section {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-            max-width: 850px;
-        }
-
-        .info-row {
-            margin-bottom: 14px;
-            font-size: 15px;
-        }
-
-        .info-row strong {
-            display: inline-block;
-            width: 160px;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 18px;
-        }
-
-        table thead {
-            background: #eff6ff;
-        }
-
-        table th,
-        table td {
-            padding: 14px;
-            border-bottom: 1px solid #e5e7eb;
-            text-align: left;
-            font-size: 14px;
-        }
-
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="navbar">
-        <h1>POSKO</h1>
-        <span>Detail Bantuan Masuk</span>
-    </div>
-
-    <div class="container">
-        <div class="section">
-            <h2>Detail Bantuan Masuk</h2>
-
-            <div class="info-row">
-                <strong>Tanggal</strong>
-                : {{ \Carbon\Carbon::parse($incomingDonation->donation_date)->format('d-m-Y') }}
-            </div>
-
-            <div class="info-row">
-                <strong>Donatur</strong>
-                : {{ $incomingDonation->donor->name ?? '-' }}
-            </div>
-
-            <div class="info-row">
-                <strong>Catatan</strong>
-                : {{ $incomingDonation->notes ?? '-' }}
-            </div>
-
-            <h3>Barang Bantuan</h3>
-
-            <table>
-                <thead>
+        <table>
+            <thead>
+                <tr>
+                    <th width="70">No</th>
+                    <th>Barang</th>
+                    <th>Kategori</th>
+                    <th>Jumlah</th>
+                    <th>Satuan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($incomingDonation->details as $detail)
                     <tr>
-                        <th>No</th>
-                        <th>Barang</th>
-                        <th>Kategori</th>
-                        <th>Jumlah</th>
-                        <th>Satuan</th>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $detail->item->name ?? '-' }}</td>
+                        <td>
+                            <span class="badge">
+                                {{ $detail->item->category->name ?? '-' }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-green">
+                                +{{ $detail->quantity }}
+                            </span>
+                        </td>
+                        <td>{{ $detail->item->unit ?? '-' }}</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($incomingDonation->details as $detail)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-                            <td>{{ $detail->item->name ?? '-' }}</td>
-                            <td>{{ $detail->item->category->name ?? '-' }}</td>
-                            <td>{{ $detail->quantity }}</td>
-                            <td>{{ $detail->item->unit ?? '-' }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                @endforeach
+            </tbody>
+        </table>
 
-            <a href="{{ route('incoming-donations.index') }}" class="btn btn-secondary">Kembali</a>
-        </div>
+        <a href="{{ route('incoming-donations.index') }}" class="btn btn-secondary" style="margin-top: 20px;">
+            Kembali
+        </a>
     </div>
 
-</body>
-</html>
+@endsection

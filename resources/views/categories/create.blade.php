@@ -1,133 +1,37 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambah Kategori - POSKO</title>
+@extends('layouts.app')
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+@section('title', 'Tambah Kategori - POSKO')
+@section('page-subtitle', 'Tambah Kategori Bantuan')
 
-        body {
-            margin: 0;
-            background: #f4f6f8;
-            color: #1f2937;
-        }
+@section('content')
 
-        .navbar {
-            background: #1e40af;
-            color: white;
-            padding: 18px 40px;
-        }
+    <div class="section form-wrapper">
+        <h2>Tambah Kategori Bantuan</h2>
 
-        .navbar h1 {
-            margin: 0;
-            font-size: 24px;
-        }
+        <form action="{{ route('categories.store') }}" method="POST">
+            @csrf
 
-        .container {
-            padding: 30px 40px;
-        }
+            <div class="form-group">
+                <label>Nama Kategori</label>
+                <input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: Sembako">
 
-        .section {
-            background: white;
-            border-radius: 14px;
-            padding: 25px;
-            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
-            max-width: 700px;
-        }
+                @error('name')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
 
-        .form-group {
-            margin-bottom: 18px;
-        }
+            <div class="form-group">
+                <label>Deskripsi</label>
+                <textarea name="description" placeholder="Masukkan deskripsi kategori">{{ old('description') }}</textarea>
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-        }
+                @error('description')
+                    <div class="error">{{ $message }}</div>
+                @enderror
+            </div>
 
-        input,
-        textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        textarea {
-            height: 120px;
-            resize: vertical;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 10px 16px;
-            border-radius: 8px;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .btn-primary {
-            background: #1e40af;
-            color: white;
-        }
-
-        .btn-secondary {
-            background: #6b7280;
-            color: white;
-        }
-
-        .error {
-            color: #dc2626;
-            font-size: 13px;
-            margin-top: 6px;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="navbar">
-        <h1>POSKO</h1>
-        <span>Tambah Kategori Bantuan</span>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+            <a href="{{ route('categories.index') }}" class="btn btn-secondary">Kembali</a>
+        </form>
     </div>
 
-    <div class="container">
-        <div class="section">
-            <h2>Tambah Kategori Bantuan</h2>
-
-            <form action="{{ route('categories.store') }}" method="POST">
-                @csrf
-
-                <div class="form-group">
-                    <label>Nama Kategori</label>
-                    <input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: Sembako">
-
-                    @error('name')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="form-group">
-                    <label>Deskripsi</label>
-                    <textarea name="description" placeholder="Masukkan deskripsi kategori">{{ old('description') }}</textarea>
-
-                    @error('description')
-                        <div class="error">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="{{ route('categories.index') }}" class="btn btn-secondary">Kembali</a>
-            </form>
-        </div>
-    </div>
-
-</body>
-</html>
+@endsection
