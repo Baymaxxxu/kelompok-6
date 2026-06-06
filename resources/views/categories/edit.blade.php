@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Kategori - POSKO</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background: #f4f6f8;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #1e40af;
+            color: white;
+            padding: 18px 40px;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            padding: 30px 40px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+            max-width: 700px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #1e40af;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+        }
+
+        .error {
+            color: #dc2626;
+            font-size: 13px;
+            margin-top: 6px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>POSKO</h1>
+        <span>Edit Kategori Bantuan</span>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <h2>Edit Kategori Bantuan</h2>
+
+            <form action="{{ route('categories.update', $category->id) }}" method="POST">
+                @csrf
+                @method('PUT')
+
+                <div class="form-group">
+                    <label>Nama Kategori</label>
+                    <input type="text" name="name" value="{{ old('name', $category->name) }}">
+
+                    @error('name')
+                        <div class="error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="form-group">
+                    <label>Deskripsi</label>
+                    <textarea name="description">{{ old('description', $category->description) }}</textarea>
+
+                    @error('description')
+                        <div class="error">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+                <a href="{{ route('categories.index') }}" class="btn btn-secondary">Kembali</a>
+            </form>
+        </div>
+    </div>
+
+</body>
+</html>
