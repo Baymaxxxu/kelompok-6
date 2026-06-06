@@ -7,6 +7,7 @@ use App\Http\Controllers\ItemController;
 use App\Http\Controllers\DonorController;
 use App\Http\Controllers\RecipientController;
 use App\Http\Controllers\IncomingDonationController;
+use App\Http\Controllers\OutgoingDistributionController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
@@ -17,3 +18,6 @@ Route::resource('penerima', RecipientController::class)->names('recipients');
 
 Route::resource('bantuan-masuk', IncomingDonationController::class)
     ->names('incoming-donations');
+
+Route::resource('distribusi', OutgoingDistributionController::class)
+    ->names('outgoing-distributions');
