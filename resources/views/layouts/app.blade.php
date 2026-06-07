@@ -336,6 +336,17 @@
             <a href="{{ route('incoming-donations.index') }}">Bantuan Masuk</a>
             <a href="{{ route('outgoing-distributions.index') }}">Distribusi</a>
             <a href="{{ route('reports.index') }}">Laporan</a>
+
+            <span style="margin-left: 18px;">
+                {{ auth()->user()->name ?? '' }}
+            </span>
+
+            <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                @csrf
+            <button type="submit" style="background: #dc2626; color: white; border: none; padding: 8px 12px; border-radius: 8px; cursor: pointer; margin-left: 10px;">
+            Logout
+            </button>
+            </form>
         </div>
     </div>
 
