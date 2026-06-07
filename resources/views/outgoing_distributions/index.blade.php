@@ -19,6 +19,12 @@
             </div>
         @endif
 
+        @if (auth()->user()->role === 'petugas')
+            <div class="role-info">
+                <strong>Info Akses:</strong> Anda login sebagai Petugas. Anda dapat input distribusi dan melihat detail, tetapi fitur hapus transaksi hanya dapat dilakukan oleh Admin.
+            </div>
+        @endif
+
         <table>
             <thead>
                 <tr>
@@ -56,14 +62,16 @@
                                     Detail
                                 </a>
 
-                                <form action="{{ route('outgoing-distributions.destroy', $distribution->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data distribusi ini? Stok barang akan dikembalikan.')">
-                                    @csrf
-                                    @method('DELETE')
+                                @if (auth()->user()->role === 'admin')
+                                    <form action="{{ route('outgoing-distributions.destroy', $distribution->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data distribusi ini? Stok barang akan dikembalikan.')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
-                                        Hapus
-                                    </button>
-                                </form>
+                                        <button type="submit" class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

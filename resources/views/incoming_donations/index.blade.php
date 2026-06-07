@@ -19,6 +19,12 @@
             </div>
         @endif
 
+        @if (auth()->user()->role === 'petugas')
+            <div class="role-info">
+                <strong>Info Akses:</strong> Anda login sebagai Petugas. Anda dapat input bantuan masuk dan melihat detail, tetapi fitur hapus transaksi hanya dapat dilakukan oleh Admin.
+            </div>
+        @endif
+
         <table>
             <thead>
                 <tr>
@@ -57,14 +63,15 @@
                                 </a>
 
                                 @if (auth()->user()->role === 'admin')
-                                <form action="{{ route('incoming-donations.destroy', $donation->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data bantuan masuk ini? Stok barang akan dikurangi kembali.')">
-                                    @csrf
-                                    @method('DELETE')
+                                    <form action="{{ route('incoming-donations.destroy', $donation->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data bantuan masuk ini? Stok barang akan dikurangi kembali.')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
-                                        Hapus
-                                    </button>
-                                </form>
+                                        <button type="submit" class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>

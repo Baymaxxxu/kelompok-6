@@ -22,6 +22,12 @@
             </div>
         @endif
 
+        @if (auth()->user()->role === 'petugas')
+            <div class="role-info">
+                <strong>Info Akses:</strong> Anda login sebagai Petugas. Fitur tambah, edit, dan hapus data donatur hanya dapat dilakukan oleh Admin.
+            </div>
+        @endif
+
         <table>
             <thead>
                 <tr>

@@ -8,10 +8,11 @@
     <div class="section">
         <div class="header">
             <h2>Data Kategori Bantuan</h2>
+
             @if (auth()->user()->role === 'admin')
-            <a href="{{ route('categories.create') }}" class="btn btn-primary">
-                + Tambah Kategori
-            </a>
+                <a href="{{ route('categories.create') }}" class="btn btn-primary">
+                    + Tambah Kategori
+                </a>
             @endif
         </div>
 
@@ -21,14 +22,21 @@
             </div>
         @endif
 
+        @if (auth()->user()->role === 'petugas')
+            <div class="role-info">
+                <strong>Info Akses:</strong> Anda login sebagai Petugas. Fitur tambah, edit, dan hapus kategori hanya dapat dilakukan oleh Admin.
+            </div>
+        @endif
+
         <table>
             <thead>
                 <tr>
                     <th width="70">No</th>
                     <th>Nama Kategori</th>
                     <th>Deskripsi</th>
+
                     @if (auth()->user()->role === 'admin')
-                    <th width="180">Aksi</th>
+                        <th width="180">Aksi</th>
                     @endif
                 </tr>
             </thead>
@@ -38,28 +46,29 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->description ?? '-' }}</td>
+
                         @if (auth()->user()->role === 'admin')
-                        <td>
-                            <div class="action">
-                                <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">
-                                    Edit
-                                </a>
+                            <td>
+                                <div class="action">
+                                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">
+                                        Edit
+                                    </a>
 
-                                <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
-                                    @csrf
-                                    @method('DELETE')
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                                        <button type="submit" class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         @endif
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="empty">
+                        <td colspan="{{ auth()->user()->role === 'admin' ? 4 : 3 }}" class="empty">
                             Belum ada data kategori bantuan.
                         </td>
                     </tr>

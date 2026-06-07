@@ -24,81 +24,72 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 24px;
         }
 
-        .navbar {
-    background: #1e40af;
-    color: white;
-    padding: 18px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 24px;
-}
+        .navbar-brand h1 {
+            margin: 0;
+            font-size: 28px;
+        }
 
-.navbar-brand h1 {
-    margin: 0;
-    font-size: 28px;
-}
+        .navbar-brand span {
+            display: block;
+            margin-top: 4px;
+            font-size: 15px;
+            opacity: 0.9;
+        }
 
-.navbar-brand span {
-    display: block;
-    margin-top: 4px;
-    font-size: 15px;
-    opacity: 0.9;
-}
+        .navbar-menu {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
 
-.navbar-menu {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-}
+        .navbar-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+        }
 
-.navbar-menu a {
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 15px;
-}
+        .navbar-menu a:hover {
+            text-decoration: underline;
+        }
 
-.navbar-menu a:hover {
-    text-decoration: underline;
-}
+        .navbar-user {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-left: 10px;
+            padding-left: 16px;
+            border-left: 1px solid rgba(255, 255, 255, 0.35);
+        }
 
-.navbar-user {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-left: 10px;
-    padding-left: 16px;
-    border-left: 1px solid rgba(255, 255, 255, 0.35);
-}
+        .navbar-user span {
+            font-size: 14px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
 
-.navbar-user span {
-    font-size: 14px;
-    font-weight: bold;
-    white-space: nowrap;
-}
+        .logout-form {
+            margin: 0;
+        }
 
-.logout-form {
-    margin: 0;
-}
+        .logout-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-.logout-btn {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.logout-btn:hover {
-    background: #b91c1c;
-}
+        .logout-btn:hover {
+            background: #b91c1c;
+        }
 
         .container {
             padding: 30px 40px;
@@ -217,6 +208,20 @@
             margin-bottom: 18px;
         }
 
+        .role-info {
+            background: #fef3c7;
+            color: #92400e;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 18px;
+            font-size: 14px;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .role-info strong {
+            color: #78350f;
+        }
+
         .error {
             color: #dc2626;
             font-size: 13px;
@@ -310,33 +315,26 @@
             cursor: pointer;
         }
 
-        @media (max-width: 1000px) {
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
+        @media print {
+            .navbar,
+            .print-btn {
+                display: none;
+            }
 
-    .navbar {
-        display: block;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
+            body {
+                background: white;
+            }
 
-    .navbar-menu {
-        justify-content: flex-start;
-        margin-top: 14px;
-    }
+            .container {
+                padding: 0;
+            }
 
-    .navbar-user {
-        border-left: none;
-        padding-left: 0;
-        margin-left: 0;
-    }
-
-    .container {
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-}
+            .section,
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+            }
+        }
 
         @media (max-width: 1000px) {
             .cards {
@@ -345,17 +343,22 @@
 
             .navbar {
                 display: block;
+                padding-left: 20px;
+                padding-right: 20px;
             }
 
-            .navbar a {
-                display: inline-block;
-                margin-top: 10px;
+            .navbar-menu {
+                justify-content: flex-start;
+                margin-top: 14px;
+            }
+
+            .navbar-user {
+                border-left: none;
+                padding-left: 0;
                 margin-left: 0;
-                margin-right: 12px;
             }
 
-            .container,
-            .navbar {
+            .container {
                 padding-left: 20px;
                 padding-right: 20px;
             }
@@ -379,38 +382,38 @@
 <body>
 
     <div class="navbar">
-    <div class="navbar-brand">
-        <h1>POSKO</h1>
-        <span>@yield('page-subtitle', 'Sistem Informasi Pendataan dan Penyaluran Bantuan Bencana')</span>
-    </div>
+        <div class="navbar-brand">
+            <h1>POSKO</h1>
+            <span>@yield('page-subtitle', 'Sistem Informasi Pendataan dan Penyaluran Bantuan Bencana')</span>
+        </div>
 
-    <div class="navbar-menu">
-        <a href="{{ route('dashboard') }}">Dashboard</a>
-        <a href="{{ route('categories.index') }}">Kategori</a>
-        <a href="{{ route('items.index') }}">Barang</a>
-        <a href="{{ route('donors.index') }}">Donatur</a>
-        <a href="{{ route('recipients.index') }}">Penerima</a>
-        <a href="{{ route('incoming-donations.index') }}">Bantuan Masuk</a>
-        <a href="{{ route('outgoing-distributions.index') }}">Distribusi</a>
-        <a href="{{ route('reports.index') }}">Laporan</a>
+        <div class="navbar-menu">
+            <a href="{{ route('dashboard') }}">Dashboard</a>
+            <a href="{{ route('categories.index') }}">Kategori</a>
+            <a href="{{ route('items.index') }}">Barang</a>
+            <a href="{{ route('donors.index') }}">Donatur</a>
+            <a href="{{ route('recipients.index') }}">Penerima</a>
+            <a href="{{ route('incoming-donations.index') }}">Bantuan Masuk</a>
+            <a href="{{ route('outgoing-distributions.index') }}">Distribusi</a>
+            <a href="{{ route('reports.index') }}">Laporan</a>
 
-        <div class="navbar-user">
-            <span>
-                {{ auth()->user()->name ?? '' }}
-                @if (auth()->check())
-                    ({{ ucfirst(auth()->user()->role) }})
-                @endif
-            </span>
+            <div class="navbar-user">
+                <span>
+                    {{ auth()->user()->name ?? '' }}
+                    @if (auth()->check())
+                        ({{ ucfirst(auth()->user()->role) }})
+                    @endif
+                </span>
 
-            <form action="{{ route('logout') }}" method="POST" class="logout-form">
-                @csrf
-                <button type="submit" class="logout-btn">
-                    Logout
-                </button>
-            </form>
+                <form action="{{ route('logout') }}" method="POST" class="logout-form">
+                    @csrf
+                    <button type="submit" class="logout-btn">
+                        Logout
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 
     <div class="container">
         @yield('content')

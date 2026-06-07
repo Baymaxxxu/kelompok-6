@@ -8,16 +8,23 @@
     <div class="section">
         <div class="header">
             <h2>Data Penerima / Lokasi Tujuan</h2>
+
             @if (auth()->user()->role === 'admin')
-            <a href="{{ route('recipients.create') }}" class="btn btn-primary">
-                + Tambah Penerima
-            </a>
+                <a href="{{ route('recipients.create') }}" class="btn btn-primary">
+                    + Tambah Penerima
+                </a>
             @endif
         </div>
 
         @if (session('success'))
             <div class="alert">
                 {{ session('success') }}
+            </div>
+        @endif
+
+        @if (auth()->user()->role === 'petugas')
+            <div class="role-info">
+                <strong>Info Akses:</strong> Anda login sebagai Petugas. Fitur tambah, edit, dan hapus data penerima hanya dapat dilakukan oleh Admin.
             </div>
         @endif
 
@@ -30,8 +37,9 @@
                     <th>Lokasi</th>
                     <th>Alamat</th>
                     <th>Catatan</th>
+
                     @if (auth()->user()->role === 'admin')
-                    <th width="180">Aksi</th>
+                        <th width="180">Aksi</th>
                     @endif
                 </tr>
             </thead>
@@ -44,28 +52,29 @@
                         <td>{{ $recipient->location ?? '-' }}</td>
                         <td>{{ $recipient->address ?? '-' }}</td>
                         <td>{{ $recipient->notes ?? '-' }}</td>
+
                         @if (auth()->user()->role === 'admin')
-                        <td>
-                            <div class="action">
-                                <a href="{{ route('recipients.edit', $recipient->id) }}" class="btn btn-warning">
-                                    Edit
-                                </a>
+                            <td>
+                                <div class="action">
+                                    <a href="{{ route('recipients.edit', $recipient->id) }}" class="btn btn-warning">
+                                        Edit
+                                    </a>
 
-                                <form action="{{ route('recipients.destroy', $recipient->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data penerima ini?')">
-                                    @csrf
-                                    @method('DELETE')
+                                    <form action="{{ route('recipients.destroy', $recipient->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data penerima ini?')">
+                                        @csrf
+                                        @method('DELETE')
 
-                                    <button type="submit" class="btn btn-danger">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                                        <button type="submit" class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
                         @endif
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="7" class="empty">
+                        <td colspan="{{ auth()->user()->role === 'admin' ? 7 : 6 }}" class="empty">
                             Belum ada data penerima atau lokasi tujuan.
                         </td>
                     </tr>
