@@ -8,9 +8,12 @@
     <div class="section">
         <div class="header">
             <h2>Data Donatur</h2>
-            <a href="{{ route('donors.create') }}" class="btn btn-primary">
-                + Tambah Donatur
-            </a>
+
+            @if (auth()->user()->role === 'admin')
+                <a href="{{ route('donors.create') }}" class="btn btn-primary">
+                    + Tambah Donatur
+                </a>
+            @endif
         </div>
 
         @if (session('success'))
@@ -27,7 +30,10 @@
                     <th>No. HP</th>
                     <th>Instansi</th>
                     <th>Alamat</th>
-                    <th width="180">Aksi</th>
+
+                    @if (auth()->user()->role === 'admin')
+                        <th width="180">Aksi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -38,26 +44,29 @@
                         <td>{{ $donor->phone ?? '-' }}</td>
                         <td>{{ $donor->institution ?? '-' }}</td>
                         <td>{{ $donor->address ?? '-' }}</td>
-                        <td>
-                            <div class="action">
-                                <a href="{{ route('donors.edit', $donor->id) }}" class="btn btn-warning">
-                                    Edit
-                                </a>
 
-                                <form action="{{ route('donors.destroy', $donor->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus donatur ini?')">
-                                    @csrf
-                                    @method('DELETE')
+                        @if (auth()->user()->role === 'admin')
+                            <td>
+                                <div class="action">
+                                    <a href="{{ route('donors.edit', $donor->id) }}" class="btn btn-warning">
+                                        Edit
+                                    </a>
 
-                                    <button type="submit" class="btn btn-danger">
-                                        Hapus
-                                    </button>
-                                </form>
-                            </div>
-                        </td>
+                                    <form action="{{ route('donors.destroy', $donor->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus donatur ini?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="btn btn-danger">
+                                            Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        @endif
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="6" class="empty">
+                        <td colspan="{{ auth()->user()->role === 'admin' ? 6 : 5 }}" class="empty">
                             Belum ada data donatur.
                         </td>
                     </tr>

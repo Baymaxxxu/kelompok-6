@@ -8,9 +8,11 @@
     <div class="section">
         <div class="header">
             <h2>Data Penerima / Lokasi Tujuan</h2>
+            @if (auth()->user()->role === 'admin')
             <a href="{{ route('recipients.create') }}" class="btn btn-primary">
                 + Tambah Penerima
             </a>
+            @endif
         </div>
 
         @if (session('success'))
@@ -28,7 +30,9 @@
                     <th>Lokasi</th>
                     <th>Alamat</th>
                     <th>Catatan</th>
+                    @if (auth()->user()->role === 'admin')
                     <th width="180">Aksi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -40,6 +44,7 @@
                         <td>{{ $recipient->location ?? '-' }}</td>
                         <td>{{ $recipient->address ?? '-' }}</td>
                         <td>{{ $recipient->notes ?? '-' }}</td>
+                        @if (auth()->user()->role === 'admin')
                         <td>
                             <div class="action">
                                 <a href="{{ route('recipients.edit', $recipient->id) }}" class="btn btn-warning">
@@ -56,6 +61,7 @@
                                 </form>
                             </div>
                         </td>
+                        @endif
                     </tr>
                 @empty
                     <tr>

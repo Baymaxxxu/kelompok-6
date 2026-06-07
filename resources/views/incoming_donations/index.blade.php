@@ -56,6 +56,7 @@
                                     Detail
                                 </a>
 
+                                @if (auth()->user()->role === 'admin')
                                 <form action="{{ route('incoming-donations.destroy', $donation->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data bantuan masuk ini? Stok barang akan dikurangi kembali.')">
                                     @csrf
                                     @method('DELETE')

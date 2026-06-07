@@ -8,9 +8,11 @@
     <div class="section">
         <div class="header">
             <h2>Data Kategori Bantuan</h2>
+            @if (auth()->user()->role === 'admin')
             <a href="{{ route('categories.create') }}" class="btn btn-primary">
                 + Tambah Kategori
             </a>
+            @endif
         </div>
 
         @if (session('success'))
@@ -25,7 +27,9 @@
                     <th width="70">No</th>
                     <th>Nama Kategori</th>
                     <th>Deskripsi</th>
+                    @if (auth()->user()->role === 'admin')
                     <th width="180">Aksi</th>
+                    @endif
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +38,7 @@
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->description ?? '-' }}</td>
+                        @if (auth()->user()->role === 'admin')
                         <td>
                             <div class="action">
                                 <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning">
@@ -50,6 +55,7 @@
                                 </form>
                             </div>
                         </td>
+                        @endif
                     </tr>
                 @empty
                     <tr>
