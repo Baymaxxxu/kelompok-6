@@ -147,9 +147,9 @@
         </form>
 
         <div class="demo-info">
-            <strong>Akun Demo:</strong><br>
-            Email: admin@posko.com<br>
-            Password: admin123
+            <strong>Panduan Penggunaan:</strong><br>
+            • Masuk sebagai <strong>Admin</strong> untuk mengelola data barang, kategori, donor, dan penerima<br>
+            • Masuk sebagai <strong>Petugas</strong> untuk pendistribusian bantuan
         </div>
     </div>
 
